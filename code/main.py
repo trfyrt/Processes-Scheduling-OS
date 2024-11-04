@@ -12,16 +12,16 @@ def run(process, quantumTime = None):
     results = None
     match process:
         case 'fcfs':
-            print("Executing FCFS scheduling...")
+            print("Executing First Come First Serve scheduling...")
             results = fcfs(processes)
-        case 'sjfNone':
-            print("Executing SJF Non-Preemptive scheduling...")
-            results = sjfNone(processes)
+        case 'sjfNon':
+            print("Executing Shortest Job First Non-Preemptive scheduling...")
+            results = sjfNon(processes)
         case 'sjf':
-            print("Executing SJF Preemptive scheduling...")
+            print("Executing Shortest Job First Preemptive scheduling...")
             results = sjf(processes)
         case 'ljf':
-            print("Executing LJF scheduling...")
+            print("Executing Longest Job First scheduling...")
             results = ljf(processes)
         case 'roundRobin':
             print(f"Executing Round Robin scheduling with quantum time {quantumTime}...")
@@ -64,7 +64,7 @@ def run(process, quantumTime = None):
 
 print("Process Start!")
 run('fcfs')
-run('sjfNone')
+run('sjfNon')
 run('sjf')
 run('ljf')
 run('roundRobin', 12)

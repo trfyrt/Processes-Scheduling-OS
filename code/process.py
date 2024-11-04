@@ -10,7 +10,6 @@ class Process:
         self.turnAroundTime = 0
         self.startTime = arrivalTime
 
-
 def fcfs(processes): #a. first come first serve
     time = 0
     queue = []
@@ -63,7 +62,7 @@ def fcfs(processes): #a. first come first serve
         time += 1
     return processes
 
-def sjfNone(processes): #b. Shortest Job First (None preemptive)
+def sjfNon(processes): #b. Shortest Job First (None preemptive)
     time = 0
     queue = []
     running = None
