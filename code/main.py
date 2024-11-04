@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def run(process, quantumTime = None):
-    fileName = process.upper() + '_Output'
+    fileName = process.upper()
     processes = []
     data = pd.read_excel('data/processes.xlsx')
     for i in range(0, len(data)):
@@ -56,7 +56,7 @@ def run(process, quantumTime = None):
         dfProcesses = pd.DataFrame(data)
         dfDetails = pd.DataFrame(details)
 
-        with pd.ExcelWriter(f'data/{fileName}.xlsx') as writer:
+        with pd.ExcelWriter(f'data/output/{fileName}.xlsx') as writer:
             dfProcesses.to_excel(writer, sheet_name='Processes', index=False)
             dfDetails.to_excel(writer, sheet_name='Details', index=False)
 
