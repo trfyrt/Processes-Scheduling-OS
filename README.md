@@ -1,5 +1,5 @@
 # Operating System Processes Scheduling
-## Scheduling Algorith
+## Scheduling Algorithm
 Based on the assignment the code is to perform a scheduling simulation using these algorithms:
 - **First Come First Serve**
 - **Shortest Job First (Non-Preemptive)**
