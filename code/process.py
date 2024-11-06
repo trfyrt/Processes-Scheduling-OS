@@ -248,7 +248,7 @@ def ljf(processes): #d. Longest Job First (preemptive)
     timeline_df = pd.DataFrame(timeline)
     return processes, timeline_df
 
-def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
+def roundRobin(processes, quantumTime): 
     counter = quantumTime
     time = 0
     queue = []
@@ -258,65 +258,39 @@ def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
     timeline = []
 
     while finishedJob < len(processes):    
-        nextInLine = None
         if counter == 0:
             if running is not None:
-                running.startTime = time
-                nextInLine = running
+                queue.append(running)
                 running = None
             counter = quantumTime
             
         for process in processes:
             if process.arrivalTime == time:
-                if running is not None:
-                    queue.append(process)
-                else:
-                    running = process
-                
-        if running is not None:
-            if len(queue) > 0:
-                lowest = running
-                for q in queue:
-                    if q.startTime < lowest.startTime and q.remainingTime > 0:
-                        lowest = q
-                if lowest is not running:
-                    queue.remove(lowest)
-                    queue.append(running)
-                    running = lowest
-        else:
-            if len(queue) > 0:
-                lowest = None
-                for q in queue:
-                    if lowest is None:
-                        if q.remainingTime > 0:
-                            lowest = q
-                    else:
-                        if q.startTime < lowest.startTime and q.remainingTime > 0:
-                            lowest = q
-                if lowest is not None:
-                    queue.remove(lowest)
-                    running = lowest
+                queue.append(process)
+        
+        if running is None and len(queue) > 0:
+            running = queue.pop(0)
+            if running.startTime is None:
+                running.startTime = time
+            counter = quantumTime  # Reset counter untuk proses yang baru mulai
 
         timeline.append({
-        'PID': running.PID if running is not None else None,
-        'Remaining Time': running.remainingTime if running is not None else None,
-        'Iteration': time
-        })  
-
-        if nextInLine is not None:
-            queue.append(nextInLine)
+            'Iteration': time,
+            'PID': running.PID if running is not None else None,
+            'Remaining Time': running.remainingTime if running is not None else None
+        })
 
         if running is not None:
             running.remainingTime -= 1
             running.turnAroundTime += 1
+            counter -= 1
+            
             if running.remainingTime == 0:
                 finishedJob += 1
                 running.completeTime = time + 1
                 running = None
-                counter = quantumTime + 1
-        
-        counter -= 1
-        
+                counter = quantumTime  # Reset counter untuk proses berikutnya
+
         for q in queue:
             if q.remainingTime > 0:
                 q.waitingTime += 1
