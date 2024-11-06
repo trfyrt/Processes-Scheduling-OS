@@ -7,6 +7,8 @@ Based on the assignment the code is to perform a scheduling simulation using the
 - **Longest Job First (Preemptive)**
 - **Round Robin (Quantum Time = 12)**
 
+<br>
+<hr>
 by **Group 4** IMT UCM 2023
 - Aaron Jevon Benedict Kongdoh | 0806022310014
 - Hainzel Kemal | 0806022310010
