@@ -3,7 +3,8 @@ import pandas as pd
 
 
 def run(process, quantumTime = None):
-    fileName = process.upper()
+    fileOutputName = process.upper()
+    fileTimelineName = process.upper() + '_Timeline'
     processes = []
     data = pd.read_excel('data/processes.xlsx')
     for i in range(0, len(data)):
@@ -13,19 +14,19 @@ def run(process, quantumTime = None):
     match process:
         case 'fcfs':
             print("Executing First Come First Serve scheduling...")
-            results = fcfs(processes)
+            results, dfTimeline = fcfs(processes)
         case 'sjfNon':
             print("Executing Shortest Job First Non-Preemptive scheduling...")
-            results = sjfNon(processes)
+            results, dfTimeline = sjfNon(processes)
         case 'sjf':
             print("Executing Shortest Job First Preemptive scheduling...")
-            results = sjf(processes)
+            results, dfTimeline = sjf(processes)
         case 'ljf':
             print("Executing Longest Job First scheduling...")
-            results = ljf(processes)
+            results, dfTimeline = ljf(processes)
         case 'roundRobin':
             print(f"Executing Round Robin scheduling with quantum time {quantumTime}...")
-            results = roundRobin(processes, quantumTime)
+            results, dfTimeline = roundRobin(processes, quantumTime)
             
     if results is not None:
         data = {'process': [process.PID for process in processes],
@@ -56,9 +57,13 @@ def run(process, quantumTime = None):
         dfProcesses = pd.DataFrame(data)
         dfDetails = pd.DataFrame(details)
 
-        with pd.ExcelWriter(f'data/output/{fileName}.xlsx') as writer:
+        with pd.ExcelWriter(f'data/output/{fileOutputName}.xlsx') as writer:
             dfProcesses.to_excel(writer, sheet_name='Processes', index=False)
             dfDetails.to_excel(writer, sheet_name='Details', index=False)
+    
+    if dfTimeline is not None:
+        with pd.ExcelWriter(f'data/timeline/{fileTimelineName}.xlsx') as writer:
+            dfTimeline.to_excel(writer, sheet_name='Timeline', index=False)
 
 
 

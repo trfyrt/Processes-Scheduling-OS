@@ -15,6 +15,8 @@ def fcfs(processes): #a. first come first serve
     queue = []
     running = None
     finishedJob = 0
+
+    timeline = []
     
     while finishedJob < len(processes):
         for process in processes:
@@ -48,6 +50,12 @@ def fcfs(processes): #a. first come first serve
                     queue.remove(lowest)
                     running = lowest
 
+        timeline.append({
+            'PID': running.PID if running is not None else None,
+            'Remaining Time': running.remainingTime if running is not None else None,
+            'Iteration': time
+        })
+
         if running is not None:
             running.remainingTime -= 1
             running.turnAroundTime += 1
@@ -60,13 +68,17 @@ def fcfs(processes): #a. first come first serve
             q.waitingTime += 1
             q.turnAroundTime += 1
         time += 1
-    return processes
+    
+    timeline_df = pd.DataFrame(timeline)
+    return processes, timeline_df
 
 def sjfNon(processes): #b. Shortest Job First (None preemptive)
     time = 0
     queue = []
     running = None
     finishedJob = 0
+
+    timeline = []
     
     while finishedJob < len(processes):
         for process in processes:
@@ -89,6 +101,12 @@ def sjfNon(processes): #b. Shortest Job First (None preemptive)
                 if lowest is not None:
                     queue.remove(lowest)
                     running = lowest
+    
+        timeline.append({
+        'PID': running.PID if running is not None else None,
+        'Remaining Time': running.remainingTime if running is not None else None,
+        'Iteration': time
+        })
 
         if running is not None:
             running.remainingTime -= 1
@@ -102,7 +120,9 @@ def sjfNon(processes): #b. Shortest Job First (None preemptive)
             q.waitingTime += 1
             q.turnAroundTime += 1
         time += 1
-    return processes
+    
+    timeline_df = pd.DataFrame(timeline)
+    return processes, timeline_df
 
 def sjf(processes): #c. Shortest Job First (preemptive)
     time = 0
@@ -110,6 +130,8 @@ def sjf(processes): #c. Shortest Job First (preemptive)
     running = None
     finishedJob = 0
     
+    timeline = []
+
     while finishedJob < len(processes):
         for process in processes:
             if process.arrivalTime == time:
@@ -142,6 +164,12 @@ def sjf(processes): #c. Shortest Job First (preemptive)
                     queue.remove(lowest)
                     running = lowest
 
+        timeline.append({
+        'PID': running.PID if running is not None else None,
+        'Remaining Time': running.remainingTime if running is not None else None,
+        'Iteration': time
+        })
+
         if running is not None:
             running.remainingTime -= 1
             running.turnAroundTime += 1
@@ -154,7 +182,9 @@ def sjf(processes): #c. Shortest Job First (preemptive)
             q.waitingTime += 1
             q.turnAroundTime += 1
         time += 1
-    return processes
+
+    timeline_df = pd.DataFrame(timeline)
+    return processes, timeline_df
 
 def ljf(processes): #d. Longest Job First (preemptive)
     time = 0
@@ -162,6 +192,8 @@ def ljf(processes): #d. Longest Job First (preemptive)
     running = None
     finishedJob = 0
     
+    timeline = []
+
     while finishedJob < len(processes):
         for process in processes:
             if process.arrivalTime == time:
@@ -194,6 +226,12 @@ def ljf(processes): #d. Longest Job First (preemptive)
                     queue.remove(highest)
                     running = highest
 
+        timeline.append({
+        'PID': running.PID if running is not None else None,
+        'Remaining Time': running.remainingTime if running is not None else None,
+        'Iteration': time
+        })
+                
         if running is not None:
             running.remainingTime -= 1
             running.turnAroundTime += 1
@@ -206,7 +244,9 @@ def ljf(processes): #d. Longest Job First (preemptive)
             q.waitingTime += 1
             q.turnAroundTime += 1
         time += 1
-    return processes
+
+    timeline_df = pd.DataFrame(timeline)
+    return processes, timeline_df
 
 def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
     counter = quantumTime
@@ -215,6 +255,8 @@ def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
     running = None
     finishedJob = 0
     
+    timeline = []
+
     while finishedJob < len(processes):    
         nextInLine = None
         if counter == 0:
@@ -254,7 +296,13 @@ def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
                 if lowest is not None:
                     queue.remove(lowest)
                     running = lowest
-                    
+
+        timeline.append({
+        'PID': running.PID if running is not None else None,
+        'Remaining Time': running.remainingTime if running is not None else None,
+        'Iteration': time
+        })  
+           
         if nextInLine is not None:
             queue.append(nextInLine)
 
@@ -275,4 +323,6 @@ def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
                 q.turnAroundTime += 1
         
         time += 1
-    return processes
+
+    timeline_df = pd.DataFrame(timeline)
+    return processes, timeline_df
