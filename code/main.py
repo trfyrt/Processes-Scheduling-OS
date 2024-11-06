@@ -4,7 +4,7 @@ import pandas as pd
 
 def run(process, quantumTime = None):
     fileOutputName = process.upper()
-    fileTimelineName = process.upper() + '_Timeline'
+    fileTimelineName = process.upper() + '_Timestamp'
     processes = []
     data = pd.read_excel('data/processes.xlsx')
     for i in range(0, len(data)):
@@ -62,7 +62,7 @@ def run(process, quantumTime = None):
             dfDetails.to_excel(writer, sheet_name='Details', index=False)
     
     if dfTimeline is not None:
-        with pd.ExcelWriter(f'data/timeline/{fileTimelineName}.xlsx') as writer:
+        with pd.ExcelWriter(f'data/timestamp/{fileTimelineName}.xlsx') as writer:
             dfTimeline.to_excel(writer, sheet_name='Timeline', index=False)
 
 
