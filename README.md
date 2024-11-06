@@ -11,4 +11,4 @@ by **Group 4** IMT UCM 2023
 - Aaron Jevon Benedict Kongdoh | 0806022310014
 - Hainzel Kemal | 0806022310010
 - Juan Daniel Titarsole | 0806022310018
-- Leonardo Widjaja | 0806022310008
+- Leonard Widjaja | 0806022310008
