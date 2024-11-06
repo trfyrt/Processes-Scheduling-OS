@@ -61,7 +61,7 @@ def fcfs(processes): #a. first come first serve
             running.turnAroundTime += 1
             if running.remainingTime == 0:
                 finishedJob += 1
-                running.completeTime = time
+                running.completeTime = time + 1
                 running = None
         
         for q in queue:
@@ -113,7 +113,7 @@ def sjfNon(processes): #b. Shortest Job First (None preemptive)
             running.turnAroundTime += 1
             if running.remainingTime == 0:
                 finishedJob += 1
-                running.completeTime = time
+                running.completeTime = time + 1
                 running = None
         
         for q in queue:
@@ -175,7 +175,7 @@ def sjf(processes): #c. Shortest Job First (preemptive)
             running.turnAroundTime += 1
             if running.remainingTime == 0:
                 finishedJob += 1
-                running.completeTime = time
+                running.completeTime = time + 1
                 running = None
         
         for q in queue:
@@ -237,7 +237,7 @@ def ljf(processes): #d. Longest Job First (preemptive)
             running.turnAroundTime += 1
             if running.remainingTime == 0:
                 finishedJob += 1
-                running.completeTime = time
+                running.completeTime = time + 1
                 running = None
         
         for q in queue:
@@ -302,7 +302,7 @@ def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
         'Remaining Time': running.remainingTime if running is not None else None,
         'Iteration': time
         })  
-           
+
         if nextInLine is not None:
             queue.append(nextInLine)
 
@@ -311,7 +311,7 @@ def roundRobin(processes, quantumTime): #Round Robin (Quantum time = 12)
             running.turnAroundTime += 1
             if running.remainingTime == 0:
                 finishedJob += 1
-                running.completeTime = time
+                running.completeTime = time + 1
                 running = None
                 counter = quantumTime + 1
         
